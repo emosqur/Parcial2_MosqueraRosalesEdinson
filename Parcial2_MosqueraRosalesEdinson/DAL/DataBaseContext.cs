@@ -13,7 +13,7 @@ namespace Parcial2_MosqueraRosalesEdinson.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<NaturalPerson>().HasIndex(c =>c.FullName).IsUnique();
+            //modelBuilder.Entity<NaturalPerson>().HasIndex(c =>c.FullName).IsUnique();
             modelBuilder.Entity<NaturalPerson>().HasIndex(c =>c.Email).IsUnique();
         }
 
