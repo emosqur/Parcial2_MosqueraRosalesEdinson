@@ -8,8 +8,10 @@ namespace Parcial2_MosqueraRosalesEdinson.DAL.Entities
         [Required]
         public Guid Id { get; set; }
 
+        [Display(Name = "Fecha de Creacion")]
         public DateTime? CreatedDate { get; set; }
 
+        [Display(Name = "Fecha de Modificacion")]
         public DateTime? ModifieldDate { get; set; }
 
     }
