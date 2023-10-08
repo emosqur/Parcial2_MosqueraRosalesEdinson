@@ -81,6 +81,7 @@ namespace Parcial2_MosqueraRosalesEdinson.Controllers
             {
                 naturalPerson.Id = Guid.NewGuid();
                 naturalPerson.CreatedDate = DateTime.Now;
+                naturalPerson.Age = CalcularAge((DateTime)naturalPerson.BirtYear);
                 _context.Add(naturalPerson);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
