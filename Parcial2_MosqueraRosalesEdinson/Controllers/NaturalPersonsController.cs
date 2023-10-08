@@ -45,6 +45,25 @@ namespace Parcial2_MosqueraRosalesEdinson.Controllers
             return View(naturalPerson);
         }
 
+        public async Task<IActionResult> Details(string Email)
+        {
+            if (Email == null || _context.NaturalsPersons == null)
+            {
+                return NotFound();
+            }
+
+            var naturalPerson = await _context.NaturalsPersons
+                .FirstOrDefaultAsync(m => m.Email == Email);
+            if (naturalPerson == null)
+            {
+                return NotFound();
+            }
+
+            return View(naturalPerson);
+        }
+
+
+
         // GET: NaturalPersons/Create
         public IActionResult Create()
         {
@@ -61,6 +80,7 @@ namespace Parcial2_MosqueraRosalesEdinson.Controllers
             if (ModelState.IsValid)
             {
                 naturalPerson.Id = Guid.NewGuid();
+                naturalPerson.CreatedDate = DateTime.Now;
                 _context.Add(naturalPerson);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -110,9 +130,10 @@ namespace Parcial2_MosqueraRosalesEdinson.Controllers
             {
                 try
                 {
+                    naturalPerson.Age = CalcularAge((DateTime)naturalPerson.BirtYear);
                     _context.Update(naturalPerson);
                     await _context.SaveChangesAsync();
-                    naturalPerson.Age = CalcularAge((DateTime)naturalPerson.BirtYear);
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -149,9 +170,9 @@ namespace Parcial2_MosqueraRosalesEdinson.Controllers
         }
 
         // POST: NaturalPersons/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             if (_context.NaturalsPersons == null)
             {
