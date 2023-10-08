@@ -66,6 +66,8 @@ namespace Parcial2_MosqueraRosalesEdinson.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(naturalPerson);
+
+
         }
 
         // GET: NaturalPersons/Edit/5
@@ -82,6 +84,14 @@ namespace Parcial2_MosqueraRosalesEdinson.Controllers
                 return NotFound();
             }
             return View(naturalPerson);
+        }
+        private int CalcularAge(DateTime BirtYear)
+        {
+            DateTime fechaActual=DateTime.Today;
+            int Age = fechaActual.Year - BirtYear.Year;
+
+
+            return Age;
         }
 
         // POST: NaturalPersons/Edit/5
@@ -102,6 +112,7 @@ namespace Parcial2_MosqueraRosalesEdinson.Controllers
                 {
                     _context.Update(naturalPerson);
                     await _context.SaveChangesAsync();
+                    naturalPerson.Age = CalcularAge((DateTime)naturalPerson.BirtYear);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -161,4 +172,5 @@ namespace Parcial2_MosqueraRosalesEdinson.Controllers
           return (_context.NaturalsPersons?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
+    
 }
